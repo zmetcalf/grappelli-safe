@@ -1,26 +1,26 @@
-$(document).ready(function(){
+mezzanine.jQuery(document).ready(function(){
     
     /// add predelete class (only necessary in case of errors)
-    $('div.inline-group').find('input[name*="DELETE"]:checked').each(function(i) {
-        $(this).parents('div.inline-related').addClass('predelete');
+    mezzanine.jQuery('div.inline-group').find('input[name*="DELETE"]:checked').each(function(i) {
+        mezzanine.jQuery(this).parents('div.inline-related').addClass('predelete');
     });
     
     // BUTTONS (STACKED INLINE)
-    $('div.inline-stacked a.closehandler').bind("click", function(){
-        $(this).parents('div.inline-stacked').addClass('collapsed');
-        $(this).parents('div.inline-stacked').addClass('collapse-closed');
-        $(this).parents('div.inline-stacked').removeClass('collapse-open');
-        $(this).parents('div.inline-stacked').find('div.inline-related').addClass('collapsed');
-        $(this).parents('div.inline-stacked').find('div.inline-related').addClass('collapse-closed');
-        $(this).parents('div.inline-stacked').find('div.inline-related').removeClass('collapse-open');
+    mezzanine.jQuery('div.inline-stacked a.closehandler').bind("click", function(){
+        mezzanine.jQuery(this).parents('div.inline-stacked').addClass('collapsed');
+        mezzanine.jQuery(this).parents('div.inline-stacked').addClass('collapse-closed');
+        mezzanine.jQuery(this).parents('div.inline-stacked').removeClass('collapse-open');
+        mezzanine.jQuery(this).parents('div.inline-stacked').find('div.inline-related').addClass('collapsed');
+        mezzanine.jQuery(this).parents('div.inline-stacked').find('div.inline-related').addClass('collapse-closed');
+        mezzanine.jQuery(this).parents('div.inline-stacked').find('div.inline-related').removeClass('collapse-open');
     });
-    $('div.inline-stacked a.openhandler').bind("click", function(){
-        $(this).parents('div.inline-stacked').removeClass('collapsed');
-        $(this).parents('div.inline-stacked').removeClass('collapse-closed');
-        $(this).parents('div.inline-stacked').addClass('collapse-open');
-        $(this).parents('div.inline-stacked').find('div.inline-related').removeClass('collapsed');
-        $(this).parents('div.inline-stacked').find('div.inline-related').removeClass('collapse-closed');
-        $(this).parents('div.inline-stacked').find('div.inline-related').addClass('collapse-open');
+    mezzanine.jQuery('div.inline-stacked a.openhandler').bind("click", function(){
+        mezzanine.jQuery(this).parents('div.inline-stacked').removeClass('collapsed');
+        mezzanine.jQuery(this).parents('div.inline-stacked').removeClass('collapse-closed');
+        mezzanine.jQuery(this).parents('div.inline-stacked').addClass('collapse-open');
+        mezzanine.jQuery(this).parents('div.inline-stacked').find('div.inline-related').removeClass('collapsed');
+        mezzanine.jQuery(this).parents('div.inline-stacked').find('div.inline-related').removeClass('collapse-closed');
+        mezzanine.jQuery(this).parents('div.inline-stacked').find('div.inline-related').addClass('collapse-open');
     });
     
     /// function for cleaning up added items
@@ -35,7 +35,7 @@ $(document).ready(function(){
         /// tinymce
         new_item.find('span.mceEditor').each(function(e) {
             var id = this.id.split('_parent')[0];
-            $(this).remove();
+            mezzanine.jQuery(this).remove();
             new_item.find('#' + id).css('display', '');
             tinyMCE.execCommand("mceAddControl", true, id);
         });
@@ -47,8 +47,8 @@ $(document).ready(function(){
     }
     
     /// ADDHANDLER
-    $('div.inline-group a.addhandler').bind("click", function(){
-        var inlinegroup = $(this).parents('div.inline-group');
+    mezzanine.jQuery('div.inline-group a.addhandler').bind("click", function(){
+        var inlinegroup = mezzanine.jQuery(this).parents('div.inline-group');
         //var new_item = inlinegroup.find('div.inline-related:last').clone(true).insertAfter('div.inline-related:last', inlinegroup);
         var new_item = inlinegroup.find('div.inline-related:last').clone(true).appendTo(inlinegroup.find('div.items:first'));
         var items = inlinegroup.find('div.inline-related').length;
@@ -58,23 +58,23 @@ $(document).ready(function(){
         inlinegroup.find('input[id*="TOTAL_FORMS"]').val(parseInt(items));
         /// replace IDs, NAMEs, HREFs & FORs ...
         new_item.find(':input,span,table,iframe,label,a,ul,p,img').each(function() {
-            if ($(this).attr('id')) {
-                $(this).attr('id', $(this).attr('id').replace(/-\d+-/g, "-" + parseInt(items - 1) + "-"));
+            if (mezzanine.jQuery(this).attr('id')) {
+                mezzanine.jQuery(this).attr('id', mezzanine.jQuery(this).attr('id').replace(/-\d+-/g, "-" + parseInt(items - 1) + "-"));
             }
-            if ($(this).attr('name')) {
-                $(this).attr('name', $(this).attr('name').replace(/-\d+-/g, "-" + parseInt(items - 1) + "-"));
+            if (mezzanine.jQuery(this).attr('name')) {
+                mezzanine.jQuery(this).attr('name', mezzanine.jQuery(this).attr('name').replace(/-\d+-/g, "-" + parseInt(items - 1) + "-"));
             }
-            if ($(this).attr('for')) {
-                $(this).attr('for', $(this).attr('for').replace(/-\d+-/g, "-" + parseInt(items - 1) + "-"));
+            if (mezzanine.jQuery(this).attr('for')) {
+                mezzanine.jQuery(this).attr('for', mezzanine.jQuery(this).attr('for').replace(/-\d+-/g, "-" + parseInt(items - 1) + "-"));
             }
-            if ($(this).attr('href')) {
-                $(this).attr('href', $(this).attr('href').replace(/-\d+-/g, "-" + parseInt(items - 1) + "-"));
+            if (mezzanine.jQuery(this).attr('href')) {
+                mezzanine.jQuery(this).attr('href', mezzanine.jQuery(this).attr('href').replace(/-\d+-/g, "-" + parseInt(items - 1) + "-"));
             }
         });
         /// remove calendars and clocks, re-init
         if (typeof(DateTimeShortcuts)!="undefined") {
-            $('a[id^="calendarlink"]').parent().remove();
-            $('a[id^="clocklink"]').parent().remove();
+            mezzanine.jQuery('a[id^="calendarlink"]').parent().remove();
+            mezzanine.jQuery('a[id^="clocklink"]').parent().remove();
             DateTimeShortcuts.init();
         }
         /// do cleanup
@@ -82,10 +82,10 @@ $(document).ready(function(){
     });
     
     /// DELETEHANDLER
-    $('div.inline-group input[name*="DELETE"]').hide();
-    $('div.inline-group a.deletelink').bind("click", function() {
-        $(this).prev(':checkbox').attr('checked', !$(this).prev(':checkbox').attr('checked'));
-        $(this).parents('div.inline-related').toggleClass('predelete');
+    mezzanine.jQuery('div.inline-group input[name*="DELETE"]').hide();
+    mezzanine.jQuery('div.inline-group a.deletelink').bind("click", function() {
+        mezzanine.jQuery(this).prev(':checkbox').attr('checked', !mezzanine.jQuery(this).prev(':checkbox').attr('checked'));
+        mezzanine.jQuery(this).parents('div.inline-related').toggleClass('predelete');
     });
     
 });
